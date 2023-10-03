@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電子時鐘</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-size: 48px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Roboto', sans-serif; /* 使用 Roboto 字體 */
+        }
+        #clock {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"></div>
+    <div id="date"></div>
+
+    <script>
+        function updateClock() {
+            const taiwanTimeZoneOffset = 8; // 台灣時間 GMT+8
+            const now = new Date();
+            const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+            const taiwanTime = new Date(utc + (3600000 * taiwanTimeZoneOffset));
+            const hours = taiwanTime.getUTCHours();
+            const minutes = taiwanTime.getUTCMinutes();
+            const seconds = taiwanTime.getUTCSeconds();
+            const year = taiwanTime.getUTCFullYear();
+            const month = (taiwanTime.getUTCMonth() + 1).toString().padStart(2, '0');
+            const day = taiwanTime.getUTCDate().toString().padStart(2, '0');
+
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            const dateString = `${year}-${month}-${day}`;
+            document.getElementById("clock").textContent = timeString;
+            document.getElementById("date").textContent = dateString;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
+
